@@ -1,36 +1,33 @@
 import type { Metadata } from "next";
-import { Open_Sans, Raleway } from "next/font/google";
+import { Barlow_Condensed, Inter } from "next/font/google";
 import "./globals.css";
 
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
+const barlow = Barlow_Condensed({
+  variable: "--font-barlow",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const raleway = Raleway({
-  variable: "--font-raleway",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "RS Logistics Limited | Your Trusted Logistics Partner",
+  title: "ACE VITALS — Fuel the Future of Performance",
   description:
-    "RS Logistics Limited – a leading logistics company providing freight forwarding, customs clearance, trucking, warehousing, and supply chain management services across Asia-Pacific.",
+    "Advanced sports nutrition engineered for strength, endurance, recovery, and daily performance. Vital Whey, Hydro Whey, NitroAce Pre Workout, Creatine, AceFuel BCAA.",
+  keywords: ["supplements", "whey protein", "pre workout", "creatine", "bcaa", "sports nutrition"],
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${openSans.variable} ${raleway.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${barlow.variable} ${inter.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

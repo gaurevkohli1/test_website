@@ -1,198 +1,116 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
-interface NavItem {
-  label: string;
-  href: string;
-  children?: { label: string; href: string }[];
-}
-
-const navItems: NavItem[] = [
-  {
-    label: "About Us",
-    href: "/about",
-    children: [
-      { label: "Company Profile", href: "/about/company-profile" },
-      { label: "Vision & Mission", href: "/about/vision-mission" },
-      { label: "Our Team", href: "/about/our-team" },
-      { label: "Achievements", href: "/about/achievements" },
-    ],
-  },
-  {
-    label: "Services",
-    href: "/services",
-    children: [
-      { label: "Freight Forwarding", href: "/services/freight-forwarding" },
-      { label: "Custom Clearance", href: "/services/custom-clearance" },
-      { label: "Trucking", href: "/services/trucking" },
-      { label: "Project Cargo", href: "/services/project-cargo" },
-      { label: "Warehousing", href: "/services/warehousing" },
-      { label: "Courier Services", href: "/services/courier-services" },
-      { label: "Supply Chain Management", href: "/services/supply-chain" },
-    ],
-  },
-  {
-    label: "Networks",
-    href: "/networks",
-  },
-  {
-    label: "E-Services",
-    href: "/e-services",
-    children: [
-      { label: "Cargo Tracking", href: "/e-services/cargo-tracking" },
-      { label: "MyRS Portal", href: "/e-services/myrs" },
-      { label: "Online Quotation", href: "/e-services/quotation" },
-    ],
-  },
+const navLinks = [
+  { label: "Products", href: "#products" },
+  { label: "Benefits", href: "#benefits" },
+  { label: "About", href: "#brand" },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled ? "bg-white shadow-md" : "bg-white/95"
-      )}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-[#050505]/90 backdrop-blur-xl border-b border-white/5"
+          : "bg-transparent"
+      }`}
     >
-      <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-between h-[70px]">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 md:h-20 flex items-center justify-between">
+
         {/* Logo */}
-        <a href="/" className="flex items-center shrink-0">
-          <Image
-            src="https://www.rslog.com/wp-content/uploads/2024/04/COMPANY-WEBSITE-CROPPED_JPG.jpg"
-            alt="RS Logistics Limited"
-            width={180}
-            height={50}
-            className="h-[50px] w-auto object-contain"
-            priority
-          />
+        <a href="#" className="flex items-center gap-3">
+          {/* Replace with Image src="/assets/images/ace-vitals-logo.png" when logo file is ready */}
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+            <polygon points="15,2 28,27 2,27" fill="none" stroke="#0799d6" strokeWidth="2" strokeLinejoin="round" />
+            <polygon points="15,9 23,25 7,25" fill="#0799d6" opacity="0.35" />
+          </svg>
+          <span
+            style={{ fontFamily: "var(--font-barlow, 'Barlow Condensed', sans-serif)" }}
+            className="text-2xl font-black tracking-widest text-white uppercase leading-none"
+          >
+            ACE<span className="text-[#0799d6]">VITALS</span>
+          </span>
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-0">
-          {navItems.map((item) => (
-            <div
-              key={item.label}
-              className="relative group"
-              onMouseEnter={() => setActiveDropdown(item.label)}
-              onMouseLeave={() => setActiveDropdown(null)}
+        <nav className="hidden md:flex items-center gap-10">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="ace-label text-[#d8d8d8] hover:text-[#0799d6] transition-colors duration-200"
             >
-              <a
-                href={item.href}
-                className="flex items-center gap-1 px-4 py-2 text-[14px] font-semibold text-gray-700 hover:text-[#12137E] transition-colors uppercase tracking-wide"
-              >
-                {item.label}
-                {item.children && <ChevronDown size={14} />}
-              </a>
-              {item.children && activeDropdown === item.label && (
-                <div className="absolute top-full left-0 bg-[#12137E] min-w-[220px] shadow-lg z-50">
-                  {item.children.map((child) => (
-                    <a
-                      key={child.label}
-                      href={child.href}
-                      className="block px-5 py-3 text-[13px] text-white hover:bg-white/20 transition-colors border-b border-white/10 last:border-0"
-                    >
-                      {child.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+              {link.label}
+            </a>
           ))}
         </nav>
 
-        {/* CTA Buttons */}
-        <div className="hidden lg:flex items-center gap-2">
-          <a
-            href="/e-services/cargo-tracking"
-            className="px-5 py-2 text-[13px] font-semibold text-white bg-[#12137E] hover:bg-[#0e0f6a] transition-colors uppercase tracking-wide"
-          >
-            Cargo Tracking
-          </a>
-          <a
-            href="/e-services/myrs"
-            className="px-5 py-2 text-[13px] font-semibold text-[#12137E] border border-[#12137E] hover:bg-[#12137E] hover:text-white transition-colors uppercase tracking-wide"
-          >
-            MyRS
-          </a>
-          <a
-            href="#"
-            className="px-3 py-2 text-[13px] text-gray-600 hover:text-[#12137E] transition-colors"
-          >
-            EN
-          </a>
-        </div>
+        {/* CTA */}
+        <a
+          href="#products"
+          style={{ fontFamily: "var(--font-barlow, 'Barlow Condensed', sans-serif)" }}
+          className="hidden md:inline-flex items-center px-6 py-2.5 border border-white/20 hover:border-[#0799d6] text-white hover:text-[#0799d6] text-sm font-bold tracking-widest uppercase rounded-sm transition-all duration-300"
+        >
+          Shop Now
+        </a>
 
-        {/* Mobile toggle */}
+        {/* Mobile hamburger */}
         <button
-          className="lg:hidden p-2 text-gray-700"
-          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden flex flex-col gap-1.5 p-2"
+          onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              className={`block h-px w-6 bg-white transition-all duration-300 ${
+                i === 0 && menuOpen ? "rotate-45 translate-y-[7px]" :
+                i === 1 && menuOpen ? "opacity-0" :
+                i === 2 && menuOpen ? "-rotate-45 -translate-y-[7px]" : ""
+              }`}
+            />
+          ))}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
-          {navItems.map((item) => (
-            <div key={item.label}>
-              <button
-                onClick={() =>
-                  setActiveDropdown(
-                    activeDropdown === item.label ? null : item.label
-                  )
-                }
-                className="w-full flex items-center justify-between px-5 py-3 text-[14px] font-semibold text-gray-700 hover:text-[#12137E] uppercase tracking-wide"
-              >
-                {item.label}
-                {item.children && <ChevronDown size={14} />}
-              </button>
-              {item.children && activeDropdown === item.label && (
-                <div className="bg-[#12137E]">
-                  {item.children.map((child) => (
-                    <a
-                      key={child.label}
-                      href={child.href}
-                      className="block px-8 py-3 text-[13px] text-white hover:bg-white/20 border-b border-white/10 last:border-0"
-                    >
-                      {child.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+      {/* Mobile menu */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ${
+          menuOpen ? "max-h-72 border-b border-white/10" : "max-h-0"
+        } bg-[#050505]/95 backdrop-blur-xl`}
+      >
+        <div className="px-6 py-6 flex flex-col gap-6">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="ace-label text-[#d8d8d8] hover:text-[#0799d6] transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </a>
           ))}
-          <div className="flex gap-2 p-4 border-t border-gray-100">
-            <a
-              href="/e-services/cargo-tracking"
-              className="flex-1 py-2 text-center text-[13px] font-semibold text-white bg-[#12137E] uppercase"
-            >
-              Cargo Tracking
-            </a>
-            <a
-              href="/e-services/myrs"
-              className="flex-1 py-2 text-center text-[13px] font-semibold text-[#12137E] border border-[#12137E] uppercase"
-            >
-              MyRS
-            </a>
-          </div>
+          <a
+            href="#products"
+            style={{ fontFamily: "var(--font-barlow, 'Barlow Condensed', sans-serif)" }}
+            className="text-center text-sm font-bold tracking-widest uppercase text-[#0799d6] border border-[#0799d6]/50 px-5 py-3 rounded-sm"
+            onClick={() => setMenuOpen(false)}
+          >
+            Shop Now
+          </a>
         </div>
-      )}
+      </div>
     </header>
   );
 }

@@ -1,101 +1,134 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* ─── ACE VITALS Brand Theme ─────────────────────────────────────────────── */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Raleway", "Open Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, monospace;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-brand: var(--brand);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
+  --color-ace-black:    #050505;
+  --color-ace-blue:     #0799d6;
+  --color-ace-silver:   #d8d8d8;
+  --color-ace-white:    #ffffff;
+  --color-ace-graphite: #111111;
+
+  --font-heading: var(--font-barlow), 'Barlow Condensed', system-ui, sans-serif;
+  --font-body:    var(--font-inter),  'Inter',            system-ui, sans-serif;
 }
+
+/* ─── Root Variables ─────────────────────────────────────────────────────── */
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #12137E;
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --radius: 0.25rem;
-  --brand: #12137E;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #12137E;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: #050505;
+  --foreground: #ffffff;
+  --ace-blue-glow: rgba(7, 153, 214, 0.25);
 }
+
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
-  body {
-    @apply bg-background text-foreground;
-    font-family: "Open Sans", ui-sans-serif, system-ui, sans-serif;
-  }
+
   html {
-    font-family: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+    background-color: #050505;
+    color: #ffffff;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
+
+  body {
+    background-color: #050505;
+    color: #ffffff;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Raleway", "Open Sans", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-heading, 'Barlow Condensed', system-ui, sans-serif);
+    font-weight: 900;
   }
 }
 
-@keyframes scroll-logos {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* ─── Noise Texture Overlay ──────────────────────────────────────────────── */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+  opacity: 0.45;
 }
 
-.animate-scroll-logos {
-  animation: scroll-logos 30s linear infinite;
+/* ─── Custom Scrollbar ───────────────────────────────────────────────────── */
+
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #0799d6; border-radius: 2px; }
+
+/* ─── Utility Classes ────────────────────────────────────────────────────── */
+
+.ace-label {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #0799d6;
 }
 
-.animate-scroll-logos:hover {
-  animation-play-state: paused;
+.glass-card {
+  background: rgba(17, 17, 17, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.blue-glow {
+  box-shadow: 0 0 40px rgba(7, 153, 214, 0.35), 0 0 80px rgba(7, 153, 214, 0.15);
+}
+
+.blue-glow-sm {
+  box-shadow: 0 0 20px rgba(7, 153, 214, 0.25);
+}
+
+/* ─── Scroll Indicator ───────────────────────────────────────────────────── */
+
+@keyframes scroll-pulse {
+  0%   { transform: translateY(0);    opacity: 0.8; }
+  50%  { transform: translateY(8px);  opacity: 0.3; }
+  100% { transform: translateY(0);    opacity: 0.8; }
+}
+.scroll-pulse { animation: scroll-pulse 1.8s ease-in-out infinite; }
+
+/* ─── Cinematic Vignette ─────────────────────────────────────────────────── */
+
+.vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(5,5,5,0.75) 100%);
+  pointer-events: none;
+}
+
+/* ─── Product Card Hover ─────────────────────────────────────────────────── */
+
+.product-card {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow  0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.4s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(7, 153, 214, 0.45) !important;
+  box-shadow: 0 0 50px rgba(7, 153, 214, 0.18), 0 24px 64px rgba(0, 0, 0, 0.6);
 }
